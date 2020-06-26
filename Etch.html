@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        
+        <title>Etch-a-sketch</title>
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <button id="clear"> Clear </button>
+        <button id="change">Change</button>
+        <div id=container>
+
+        </div>
+        <script>
+            // functionallly works
+              //intializing variables
+        const container=document.getElementById("container");
+        
+        //Creates 16x16 Grid
+
+        function makeRow(n){
+            for(i=0;i<n;i++){
+                var x=document.createElement("div");
+                x.style.border="solid 1px black";
+                x.className="row"
+                x.style.gridTemplateColumns=`repeat(${n}, 1fr)`;
+                container.appendChild(x);
+                for(j=0;j<n;j++){
+                    var y=document.createElement("div")
+                    y.style.border="solid 1px black";
+                    y.className="cell"
+                    x.appendChild(y);
+                }
+
+            }
+        }
+        //Random color function
+        function randomColor(){
+            var randomColor = Math.floor(Math.random()*16777215).toString(16)
+            return randomColor;
+        }
+        //Colour change upon hover
+        function hover(){
+            const cells=document.querySelectorAll(".cell")
+            cells.forEach(cell => cell.addEventListener('mouseover', function (e){
+            cell.style.backgroundColor="#"+randomColor();
+            }
+            )
+            )
+        }
+        //Clear's grid color
+     function clear(){
+         var btn=document.querySelector("button");
+         btn.addEventListener(`click`, function(e){
+            const cells=document.querySelectorAll(".cell")
+            cells.forEach(cell => cell.style.backgroundColor="burlywood");
+         })
+
+     }
+    //Resizes grid recursion used to acess other buttons
+     function change(){
+        var btn2=document.querySelector("button");
+        var btn2=document.querySelector("#change")
+         btn2.addEventListener(`click`, function(e){
+             
+            const cells=document.querySelectorAll(".cell")
+            cells.forEach(cell=>cell.remove())
+            const rows=document.querySelectorAll(".row")
+            rows.forEach(row=>row.remove())
+            let c=prompt("number")
+            grid(c);
+            
+          
+         }
+         )
+     }
+     //Final grid function to create such grid
+     function grid(n){
+        clear();
+        change();
+        makeRow(n);
+        hover();
+
+     }
+        grid(16);
+
+
+        </script>
+    </body>
+  
+</html>
